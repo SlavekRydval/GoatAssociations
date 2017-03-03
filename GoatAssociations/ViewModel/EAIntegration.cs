@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GoatAssociations.ViewModel
@@ -54,7 +55,15 @@ namespace GoatAssociations.ViewModel
             return "";
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Repository"></param>
+        /// <param name="Location"></param>
+        /// <param name="MenuName"></param>
+        /// <param name="ItemName"></param>
+        /// <param name="IsEnabled"></param>
+        /// <param name="IsChecked"></param>
         public void EA_GetMenuState(EA.Repository Repository, string Location, string MenuName, string ItemName, ref bool IsEnabled, ref bool IsChecked)
         {
             switch (ItemName)
@@ -68,6 +77,13 @@ namespace GoatAssociations.ViewModel
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Repository"></param>
+        /// <param name="Location"></param>
+        /// <param name="MenuName"></param>
+        /// <param name="ItemName"></param>
         public void EA_MenuClick(EA.Repository Repository, string Location, string MenuName, string ItemName)
         {
             switch (ItemName)
@@ -120,9 +136,9 @@ namespace GoatAssociations.ViewModel
                             return false; 
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    
+                    MessageBox.Show(e.Message);    
                 }
 
             }
