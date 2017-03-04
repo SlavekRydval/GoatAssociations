@@ -4,13 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoatAssociations.View"
+        xmlns:viewmodel="clr-namespace:GoatAssociations.ViewModel"
+        xmlns:model="clr-namespace:GoatAssociations.Model"
         mc:Ignorable="d"
-        Title="Goat Association!" Height="474" Width="430" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Goat Association!" Height="500" Width="430" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <!--http://www.wpf-tutorial.com/basic-controls/the-radiobutton-control/-->
+    <Window.Resources>
+        <viewmodel:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    </Window.Resources>
 
-
-    <Grid>
+    <Grid Margin="5,0,5,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -33,7 +37,7 @@
             <Label Grid.Row="0" Grid.Column="0" Margin="3" HorizontalAlignment="Center" Content="Left"/>
             <Label Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Center" Content="Right"/>
 
-
+            <!--ROLE LEFT -->
             <Grid Grid.Row="1" Grid.Column="0" Margin="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -42,10 +46,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Label  Grid.Row="0" Grid.Column="0" Margin="0,0,3,0" Content="Role:"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="0,0,3,0" Text="{Binding Path='Left.Role', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Grid.Row="0" Grid.Column="2" Content="Auto" Padding="3"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="0,0,3,0" Text="{Binding Path='GoatAssociation.Left.Role', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
+                <Button Grid.Row="0" Grid.Column="2" Content="Auto" Padding="3" Command="{Binding Path=SetRoleNameCommand}" CommandParameter="{Binding Path='GoatAssociation.Left'}"/>
             </Grid>
 
+            <!--ROLE RIGHT -->
             <Grid Grid.Row="1" Grid.Column="1" Margin="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -54,20 +59,18 @@
                 </Grid.ColumnDefinitions>
 
                 <Label  Grid.Row="0" Grid.Column="0" Margin="0,0,3,0" Content="Role:"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="0,0,3,0" Text="{Binding Path='Right.Role', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Grid.Row="0" Grid.Column="2" Content="Auto" Padding="3"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="0,0,3,0" Text="{Binding Path='GoatAssociation.Right.Role', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
+                <Button Grid.Row="0" Grid.Column="2" Content="Auto" Padding="3" Command="{Binding Path=SetRoleNameCommand}" CommandParameter="{Binding Path='GoatAssociation.Right'}"/>
             </Grid>
 
-
-            <CheckBox Grid.Row="3" Grid.Column="0" Margin="3" Content="is an attribute"/>
-            <CheckBox Grid.Row="3" Grid.Column="1" Margin="3" Content="is an attribute"/>
+            <CheckBox Grid.Row="3" Grid.Column="0" Margin="3" Content="is an attribute" IsChecked="{Binding Path=GoatAssociation.Left.IsOwnedByClassifier, Mode=TwoWay}"/>
+            <CheckBox Grid.Row="3" Grid.Column="1" Margin="3" Content="is an attribute" IsChecked="{Binding Path=GoatAssociation.Right.IsOwnedByClassifier, Mode=TwoWay}"/>
 
             <StackPanel Margin="3" Grid.Row="4" Grid.Column="0">
                 <Label FontWeight="Bold">Navigability:</Label>
-                <RadioButton GroupName="left-nav">Navigable
-                </RadioButton>
-                <RadioButton GroupName="left-nav">Non-navigable</RadioButton>
-                <RadioButton GroupName="left-nav">Unspecified</RadioButton>
+                <RadioButton GroupName="left-nav" IsChecked="{Binding Path=GoatAssociation.Left.Navigability, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:NavigabilityType.Navigable}}">Navigable</RadioButton>
+                <RadioButton GroupName="left-nav" IsChecked="{Binding Path=GoatAssociation.Left.Navigability, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:NavigabilityType.NonNavigable}}">Non-navigable</RadioButton>
+                <RadioButton GroupName="left-nav" IsChecked="{Binding Path=GoatAssociation.Left.Navigability, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:NavigabilityType.Unspecified}}">Unspecified</RadioButton>
             </StackPanel>
 
             <StackPanel Margin="3" Grid.Row="4" Grid.Column="1">
@@ -79,9 +82,13 @@
 
             <StackPanel Margin="3" Grid.Row="5" Grid.Column="0">
                 <Label FontWeight="Bold">Aggregation Kind:</Label>
-                <RadioButton GroupName="left-agg">None</RadioButton>
-                <RadioButton GroupName="left-agg">Shared</RadioButton>
-                <RadioButton GroupName="left-agg">Composite</RadioButton>
+                <GroupBox Header="Aggregation Kind">
+                    <StackPanel Margin="5">
+                        <RadioButton Margin="0,0,0,2" GroupName="left-agg" IsChecked="{Binding Path=GoatAssociation.Left.Aggregation, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:AggregationType.None}}">None</RadioButton>
+                        <RadioButton Margin="0,0,0,2" GroupName="left-agg" IsChecked="{Binding Path=GoatAssociation.Left.Aggregation, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:AggregationType.Shared}}">Shared</RadioButton>
+                        <RadioButton GroupName="left-agg" IsChecked="{Binding Path=GoatAssociation.Left.Aggregation, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:AggregationType.Composite}}">Composite</RadioButton>
+                    </StackPanel>
+                </GroupBox>
             </StackPanel>
 
             <StackPanel Margin="3" Grid.Row="5" Grid.Column="1">
@@ -101,7 +108,7 @@
                 <RadioButton GroupName="left-multi">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Label Content="Custom:" VerticalAlignment="Center"/>
-                        <TextBox Text="2..4" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding Path='Left.Multiplicity', UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalContentAlignment="Center"/>
                     </StackPanel>
                 </RadioButton>
             </StackPanel>
@@ -116,15 +123,15 @@
                 <RadioButton GroupName="right-multi">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Label Content="Custom:" VerticalAlignment="Center"/>
-                        <TextBox Text="2..4" VerticalAlignment="Center"/>
+                        <TextBox Text="2..4" VerticalContentAlignment="Center"/>
                     </StackPanel>
                 </RadioButton>
             </StackPanel>
         </Grid>
 
         <StackPanel Grid.Row="1" Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button  Margin="5" Padding="4" Content="OK" IsDefault="True" Width="{Binding ActualWidth, ElementName=btnCancel, Mode=OneWay}"/>
-            <Button x:Name="btnCancel"  Margin="5" Padding="4" Content="Cancel" IsCancel="True"/>
+            <Button Margin="5" Padding="4" Content="OK" IsDefault="True" Width="{Binding ActualWidth, ElementName=btnCancel, Mode=OneWay}" Click="Button_Click"/>
+            <Button x:Name="btnCancel"  Margin="5" Padding="10,4,10,4" Content="Cancel" IsCancel="True"/>
         </StackPanel>
 
 

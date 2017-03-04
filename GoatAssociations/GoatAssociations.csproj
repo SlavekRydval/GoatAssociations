@@ -59,21 +59,27 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Commands\RelayCommandWithResult.cs" />
+    <Compile Include="Model\AddinInformation.cs" />
+    <Compile Include="Model\NotifyPropertyClass.cs" />
     <Compile Include="ViewModel\EAIntegration.cs" />
     <Compile Include="Model\GoatAssociation.cs" />
     <Compile Include="Model\GoatAssociationEnd.cs" />
     <Compile Include="ViewModel\GoatAssociation.cs" />
+    <Compile Include="ViewModel\EnumToBooleanConverter.cs" />
+    <Compile Include="ViewModel\GoatAssociationAddin.cs" />
     <Compile Include="View\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GoatAssociation.xaml.cs">
-      <DependentUpon>GoatAssociation.xaml</DependentUpon>
+    <Compile Include="View\EditAssociation.xaml.cs">
+      <DependentUpon>EditAssociation.xaml</DependentUpon>
     </Compile>
     <Page Include="View\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\GoatAssociation.xaml">
+    <Page Include="View\EditAssociation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

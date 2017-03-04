@@ -4,6 +4,8 @@ namespace GoatAssociations.ViewModel
 {
     class GoatAssociation
     {
+        Model.GoatAssociation _goatAssociation;
+        EA.Connector _connector; 
 
         private void SetLeftOrRight(Model.GoatAssociationEnd GoatEnd, EA.ConnectorEnd EAEnd)
         {
@@ -21,16 +23,44 @@ namespace GoatAssociations.ViewModel
             }
         }
 
+        private void UpdateLeftOrRightConnector(Model.GoatAssociationEnd GoatEnd, EA.ConnectorEnd EAEnd)
+        {
+            EAEnd.Cardinality = GoatEnd.Multiplicity;
+            EAEnd.Aggregation = (int)GoatEnd.Aggregation;
+            EAEnd.Derived = GoatEnd.Derived;
+            EAEnd.DerivedUnion = GoatEnd.Union;
+            EAEnd.OwnedByClassifier = GoatEnd.IsOwnedByClassifier;
+            EAEnd.Role = GoatEnd.Role;
+            switch (GoatEnd.Navigability)
+            {
+                case Model.NavigabilityType.Navigable: EAEnd.Navigable = "Navigable"; break;
+                case Model.NavigabilityType.NonNavigable: EAEnd.Navigable = "Non-Navigable"; break;
+                case Model.NavigabilityType.Unspecified: EAEnd.Navigable = "Unspecified"; break;
+            }
+            EAEnd.Update();
+        }
 
         public GoatAssociation(Model.GoatAssociation GoatAssociation, EA.Connector Connector)
         {
             if (Connector.MetaType != "Association" && Connector.MetaType != "Aggregation")
                 throw new ArgumentException($"Wrong MetaType ({Connector.MetaType}) of the Connector.");
 
-            SetLeftOrRight(GoatAssociation.Left, Connector.ClientEnd);
-            SetLeftOrRight(GoatAssociation.Right, Connector.SupplierEnd);
+            _goatAssociation = GoatAssociation;
+            _connector = Connector;
+
+            SetLeftOrRight(_goatAssociation.Left, _connector.ClientEnd);
+            SetLeftOrRight(_goatAssociation.Right, _connector.SupplierEnd);
         }
 
+        public void UpdateConnector()
+        {
+            UpdateLeftOrRightConnector(_goatAssociation.Left, _connector.ClientEnd);
+            UpdateLeftOrRightConnector(_goatAssociation.Right, _connector.SupplierEnd);
+            _connector.Update();
+        }
+
+        public Model.GoatAssociationEnd Left { get { return _goatAssociation.Left; } }
+        public Model.GoatAssociationEnd Right { get { return _goatAssociation.Right; } }
 
     }
 }

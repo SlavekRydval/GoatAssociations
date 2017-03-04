@@ -9,14 +9,30 @@ namespace GoatAssociations.Model
     enum NavigabilityType { Unspecified, Navigable, NonNavigable }
     enum AggregationType: int { None = 0, Shared = 1, Composite = 2}
 
-    class GoatAssociationEnd
+    class GoatAssociationEnd: NotifyPropertyClass
     {
-        public NavigabilityType Navigability { get; set; }
-        public AggregationType Aggregation { get; set; }
-        public string Multiplicity { get; set; }
-        public bool Derived { get; set; }
-        public bool Union { get; set; }
-        public bool IsOwnedByClassifier { get; set; }
-        public string Role;
+        public NavigabilityType Navigability { get; set; } = NavigabilityType.Unspecified;
+        public AggregationType Aggregation { get; set; } = AggregationType.None;
+        public string Multiplicity { get; set; } = "";
+        public bool Derived { get; set; } = false;
+        public bool Union { get; set; } = false;
+        public bool IsOwnedByClassifier { get; set; } = false;
+
+        private string _role = "";
+        public string Role
+        {
+            get
+            {
+                return _role;
+            }
+            set
+            {
+                if (_role != value)
+                {
+                    _role = value;
+                    this.OnPropertyChanged(nameof(Role));
+                }
+            }
+        }
     }
 }

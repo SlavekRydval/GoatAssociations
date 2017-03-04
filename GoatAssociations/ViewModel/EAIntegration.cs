@@ -6,6 +6,9 @@ namespace GoatAssociations.ViewModel
 {
     public class EAIntegration
     {
+        private ViewModel.GoatAssociationAddin goatAssociationAddin = null;
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -13,6 +16,7 @@ namespace GoatAssociations.ViewModel
         /// <returns></returns>
         public String EA_Connect(EA.Repository Repository)
         {
+            goatAssociationAddin = new ViewModel.GoatAssociationAddin();
             return "";
         }
 
@@ -69,7 +73,7 @@ namespace GoatAssociations.ViewModel
             switch (ItemName)
             {
                 case menuItemAbout:
-                    IsEnabled = true;
+                    IsEnabled = goatAssociationAddin.AboutCommand.CanExecute(null);
                     break;
                 default:
                     IsEnabled = false;
@@ -89,8 +93,7 @@ namespace GoatAssociations.ViewModel
             switch (ItemName)
             {
                 case menuItemAbout:
-                    ///JTS, must be coverted into Action execution calling
-                    (new View.About()).ShowDialog();
+                    goatAssociationAddin.AboutCommand.Execute(null);
                     break;
                 default:
                     throw new NotImplementedException($"Operation: {nameof (EA_MenuClick)} {nameof (ItemName)}:{ItemName}");
@@ -118,22 +121,12 @@ namespace GoatAssociations.ViewModel
             {
                 try
                 {
-                    string strConnectorID = EventProperties.Get("ConnectorID").Value;
-                    int intConnectorID = int.Parse(strConnectorID);
+                    EA.Connector conn = Repository.GetConnectorByID(int.Parse (EventProperties.Get("ConnectorID").Value));
 
-                    EA.Connector conn = Repository.GetConnectorByID(intConnectorID);
-
-                    if (conn.MetaType == "Association" || conn.MetaType == "Aggregation") 
+                    if (goatAssociationAddin.EditAssociationCommand.CanExecute (conn)) 
                     {
-                        ViewModel.GoatAssociation GoatAssociation = new ViewModel.GoatAssociation(new Model.GoatAssociation(), conn);
-                        View.GoatAssociation dlg = new View.GoatAssociation();
-                        dlg.DataContext = GoatAssociation;
-                        if (dlg.ShowDialog() == true)
-                        {
-                            return true;
-                        }
-                        else
-                            return false; 
+                        goatAssociationAddin.EditAssociationCommand.Execute(conn);
+                        return goatAssociationAddin.EditAssociationCommand.Result;
                     }
                 }
                 catch (Exception e)
@@ -143,6 +136,29 @@ namespace GoatAssociations.ViewModel
 
             }
             return false;
+        }
+
+        public bool EA_OnContextItemDoubleClicked(EA.Repository Repository, string GUID, EA.ObjectType ObjectType)
+        {
+            if (ObjectType == EA.ObjectType.otConnector)// && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                EA.Connector conn = Repository.GetConnectorByGuid(GUID);
+
+                if (goatAssociationAddin.EditAssociationCommand.CanExecute(conn))
+                {
+                    goatAssociationAddin.EditAssociationCommand.Execute(conn);
+
+                    if (Repository.GetCurrentDiagram()?.SelectedConnector.ConnectorGUID == conn.ConnectorGUID)
+                    {
+                        Repository.SaveDiagram (Repository.GetCurrentDiagram().DiagramID);
+                        Repository.ReloadDiagram(Repository.GetCurrentDiagram().DiagramID);
+                    }
+
+                    return true; 
+                }
+            }
+
+            return false; 
         }
 
     }
