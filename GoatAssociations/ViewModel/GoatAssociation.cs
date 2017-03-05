@@ -2,7 +2,9 @@
 
 namespace GoatAssociations.ViewModel
 {
-    class GoatAssociation
+
+    enum MultiplicityType { None, ZeroToOne, ZeroToMany, One, OneToMany, Many, Other }
+    class GoatAssociation : Model.NotifyPropertyClass
     {
         Model.GoatAssociation _goatAssociation;
         EA.Connector _connector; 
@@ -51,6 +53,30 @@ namespace GoatAssociations.ViewModel
 
             SetLeftOrRight(_goatAssociation.Left, _connector.ClientEnd, Repository.GetElementByID (_connector.ClientID));
             SetLeftOrRight(_goatAssociation.Right, _connector.SupplierEnd, Repository.GetElementByID(_connector.SupplierID));
+
+            _goatAssociation.Left.PropertyChanged += Left_PropertyChanged;
+            Left_PropertyChanged(_goatAssociation.Left, new System.ComponentModel.PropertyChangedEventArgs(nameof(Left.Multiplicity)));
+        }
+
+        private void Left_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            //if (!(sender is Model.GoatAssociationEnd))
+            //    return; 
+
+            if (e.PropertyName == nameof(Left.Multiplicity))
+            {
+                switch (Left.Multiplicity)
+                {
+                    case "": LeftMultiplicityType = MultiplicityType.None; break;
+                    case "1": LeftMultiplicityType = MultiplicityType.One; break;
+                    case "0..1": LeftMultiplicityType = MultiplicityType.ZeroToOne; break;
+                    case "1..*": LeftMultiplicityType = MultiplicityType.OneToMany; break;
+                    case "0..*": LeftMultiplicityType = MultiplicityType.ZeroToMany; break;
+                    case "*": LeftMultiplicityType = MultiplicityType.Many; break;
+                    default: LeftCustomMultiplicity = Left.Multiplicity; LeftMultiplicityType = MultiplicityType.Other; break;
+                }
+
+            }
         }
 
         public void UpdateConnector()
@@ -62,6 +88,64 @@ namespace GoatAssociations.ViewModel
 
         public Model.GoatAssociationEnd Left { get { return _goatAssociation.Left; } }
         public Model.GoatAssociationEnd Right { get { return _goatAssociation.Right; } }
+
+        private MultiplicityType _leftMultiplicityType = MultiplicityType.None;
+        public MultiplicityType LeftMultiplicityType
+        {
+            get { return _leftMultiplicityType; }
+            set
+            {
+                if (_leftMultiplicityType != value)
+                {
+                    _leftMultiplicityType = value;
+                    switch (value)
+                    {
+                        case MultiplicityType.None:
+                            Left.Multiplicity = ""; 
+                            break;
+                        case MultiplicityType.ZeroToOne:
+                            Left.Multiplicity = "0..1";
+                            break;
+                        case MultiplicityType.ZeroToMany:
+                            Left.Multiplicity = "0..*";
+                            break;
+                        case MultiplicityType.One:
+                            Left.Multiplicity = "1";
+                            break;
+                        case MultiplicityType.OneToMany:
+                            Left.Multiplicity = "1..*";
+                            break;
+                        case MultiplicityType.Many:
+                            Left.Multiplicity = "*";
+                            break;
+                        case MultiplicityType.Other:
+                            Left.Multiplicity = _leftCustomMultiplicity;
+                            break;
+                        default:
+                            throw new NotImplementedException($"setter of {nameof(LeftMultiplicityType)}");
+                    }
+                    this.OnPropertyChanged(nameof(LeftMultiplicityType));
+                }
+            }
+        }
+
+        private string _leftCustomMultiplicity = "";
+        public string LeftCustomMultiplicity
+        {
+            get { return _leftCustomMultiplicity; }
+            set
+            {
+                if (_leftCustomMultiplicity != value)
+                {
+                    _leftCustomMultiplicity = value;
+                    Left.Multiplicity = value;
+                    LeftMultiplicityType = MultiplicityType.Other;
+                    this.OnPropertyChanged(nameof (LeftMultiplicityType));
+                }
+            }
+        }
+
+
 
     }
 }
