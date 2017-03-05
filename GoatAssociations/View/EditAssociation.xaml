@@ -7,11 +7,12 @@
         xmlns:viewmodel="clr-namespace:GoatAssociations.ViewModel"
         xmlns:model="clr-namespace:GoatAssociations.Model"
         mc:Ignorable="d"
-        Title="Goat Association!" Height="500" Width="430" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Goat Association!" Height="507" Width="624" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <!--http://www.wpf-tutorial.com/basic-controls/the-radiobutton-control/-->
     <Window.Resources>
         <viewmodel:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        <viewmodel:MultiplicityToBooleanConverter x:Key="MultiplicityToBooleanConverter" />
     </Window.Resources>
 
     <Grid Margin="5,0,5,0">
@@ -34,8 +35,8 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Margin="3" HorizontalAlignment="Center" Content="Left"/>
-            <Label Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Center" Content="Right"/>
+            <Label Grid.Row="0" Grid.Column="0" Margin="3" HorizontalAlignment="Left" Content="Left:" FontSize="14" FontWeight="Bold"/>
+            <Label Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Right" Content="Right:" FontSize="14" FontWeight="Bold"/>
 
             <!--ROLE LEFT -->
             <Grid Grid.Row="1" Grid.Column="0" Margin="3">
@@ -63,14 +64,39 @@
                 <Button Grid.Row="0" Grid.Column="2" Content="Auto" Padding="3" Command="{Binding Path=SetRoleNameCommand}" CommandParameter="{Binding Path='GoatAssociation.Right'}"/>
             </Grid>
 
-            <CheckBox Grid.Row="3" Grid.Column="0" Margin="3" Content="is an attribute" IsChecked="{Binding Path=GoatAssociation.Left.IsOwnedByClassifier, Mode=TwoWay}"/>
+            <CheckBox Grid.Row="3" Grid.Column="0" Margin="3" IsChecked="{Binding Path=GoatAssociation.Left.IsOwnedByClassifier, Mode=TwoWay}">
+                <WrapPanel>
+                    <Image Margin="0,0,3,0" Width="30" Source="/GoatAssociations;component/Resources/LOwned.png"/>
+                    <TextBlock>is an attribute</TextBlock>
+                </WrapPanel>
+            </CheckBox>
             <CheckBox Grid.Row="3" Grid.Column="1" Margin="3" Content="is an attribute" IsChecked="{Binding Path=GoatAssociation.Right.IsOwnedByClassifier, Mode=TwoWay}"/>
 
             <StackPanel Margin="3" Grid.Row="4" Grid.Column="0">
-                <Label FontWeight="Bold">Navigability:</Label>
-                <RadioButton GroupName="left-nav" IsChecked="{Binding Path=GoatAssociation.Left.Navigability, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:NavigabilityType.Navigable}}">Navigable</RadioButton>
-                <RadioButton GroupName="left-nav" IsChecked="{Binding Path=GoatAssociation.Left.Navigability, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:NavigabilityType.NonNavigable}}">Non-navigable</RadioButton>
-                <RadioButton GroupName="left-nav" IsChecked="{Binding Path=GoatAssociation.Left.Navigability, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:NavigabilityType.Unspecified}}">Unspecified</RadioButton>
+                <GroupBox Header="Navigability">
+                    <StackPanel Margin="5">
+                        <RadioButton Margin="0,0,0,2" GroupName="left-nav" IsChecked="{Binding Path=GoatAssociation.Left.Navigability, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:NavigabilityType.Navigable}}">
+                            <WrapPanel>
+                                <Image Margin="0,0,3,0" Source="/GoatAssociations;component/Resources/LNavigable.png" Width="30" VerticalAlignment="Bottom"/>
+                                <TextBlock>Navigable</TextBlock>
+                            </WrapPanel>
+                        </RadioButton>
+
+                        <RadioButton  Margin="0,0,0,2" GroupName="left-nav" IsChecked="{Binding Path=GoatAssociation.Left.Navigability, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:NavigabilityType.NonNavigable}}">
+                            <WrapPanel>
+                                <Image Margin="0,0,3,0" Source="/GoatAssociations;component/Resources/LNonNavigable.png" Width="30" VerticalAlignment="Bottom"/>
+                                <TextBlock>Non-navigable</TextBlock>
+                            </WrapPanel>
+                        </RadioButton>
+
+                        <RadioButton GroupName="left-nav" IsChecked="{Binding Path=GoatAssociation.Left.Navigability, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:NavigabilityType.Unspecified}}">
+                            <WrapPanel>
+                                <Image Margin="0,0,3,0" Source="/GoatAssociations;component/Resources/Association.png" Width="30" VerticalAlignment="Bottom"/>
+                                <TextBlock>Unspecified</TextBlock>
+                            </WrapPanel>
+                        </RadioButton>
+                    </StackPanel>
+                </GroupBox>
             </StackPanel>
 
             <StackPanel Margin="3" Grid.Row="4" Grid.Column="1">
@@ -81,12 +107,29 @@
             </StackPanel>
 
             <StackPanel Margin="3" Grid.Row="5" Grid.Column="0">
-                <Label FontWeight="Bold">Aggregation Kind:</Label>
                 <GroupBox Header="Aggregation Kind">
                     <StackPanel Margin="5">
-                        <RadioButton Margin="0,0,0,2" GroupName="left-agg" IsChecked="{Binding Path=GoatAssociation.Left.Aggregation, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:AggregationType.None}}">None</RadioButton>
-                        <RadioButton Margin="0,0,0,2" GroupName="left-agg" IsChecked="{Binding Path=GoatAssociation.Left.Aggregation, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:AggregationType.Shared}}">Shared</RadioButton>
-                        <RadioButton GroupName="left-agg" IsChecked="{Binding Path=GoatAssociation.Left.Aggregation, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:AggregationType.Composite}}">Composite</RadioButton>
+                        <RadioButton Margin="0,0,0,2" GroupName="left-agg" IsChecked="{Binding Path=GoatAssociation.Left.Aggregation, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:AggregationType.None}}">
+                            <WrapPanel>
+                                <Image Margin="0,0,3,0" Source="/GoatAssociations;component/Resources/Association.png" Width="30" VerticalAlignment="Bottom"/>
+                                <TextBlock>None</TextBlock>
+                            </WrapPanel>
+                        </RadioButton>
+
+                        <RadioButton Margin="0,0,0,2" GroupName="left-agg" IsChecked="{Binding Path=GoatAssociation.Left.Aggregation, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:AggregationType.Shared}}">
+                            <WrapPanel>
+                                <Image Margin="0,0,3,0" Source="/GoatAssociations;component/Resources/LAggregation.png" Width="30" VerticalAlignment="Bottom"/>
+                                <TextBlock>Shared</TextBlock>
+                            </WrapPanel>
+                        </RadioButton>
+
+                        <RadioButton GroupName="left-agg" IsChecked="{Binding Path=GoatAssociation.Left.Aggregation, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:AggregationType.Composite}}">
+                            <WrapPanel>
+                                <Image Margin="0,0,3,0" Source="/GoatAssociations;component/Resources/LComposition.png" Width="30" VerticalAlignment="Bottom" Stretch="UniformToFill"/>
+                                <TextBlock>Composite</TextBlock>
+                            </WrapPanel>
+                        </RadioButton>
+
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
@@ -99,18 +142,22 @@
             </StackPanel>
 
             <StackPanel Margin="3" Grid.Row="6" Grid.Column="0">
-                <Label FontWeight="Bold">Multiplicity:</Label>
-                <RadioButton GroupName="left-multi">0..1</RadioButton>
-                <RadioButton GroupName="left-multi">0..*</RadioButton>
-                <RadioButton GroupName="left-multi">1</RadioButton>
-                <RadioButton GroupName="left-multi">1..*</RadioButton>
-                <RadioButton GroupName="left-multi">*</RadioButton>
-                <RadioButton GroupName="left-multi">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Label Content="Custom:" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding Path='Left.Multiplicity', UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalContentAlignment="Center"/>
+                <GroupBox Header="Multiplicity">
+                    <StackPanel>
+                        <RadioButton GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.Left.Multiplicity, Mode=TwoWay, Converter={StaticResource MultiplicityToBooleanConverter}, ConverterParameter='0..1'}">0..1</RadioButton>
+                        <RadioButton GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.Left.Multiplicity, Mode=TwoWay, Converter={StaticResource MultiplicityToBooleanConverter}, ConverterParameter='0..*'}">0..*</RadioButton>
+                        <RadioButton GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.Left.Multiplicity, Mode=TwoWay, Converter={StaticResource MultiplicityToBooleanConverter}, ConverterParameter='1'}">1</RadioButton>
+                        <RadioButton GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.Left.Multiplicity, Mode=TwoWay, Converter={StaticResource MultiplicityToBooleanConverter}, ConverterParameter='1..*'}">1..*</RadioButton>
+                        <RadioButton GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.Left.Multiplicity, Mode=TwoWay, Converter={StaticResource MultiplicityToBooleanConverter}, ConverterParameter='*'}">*</RadioButton>
+                        <RadioButton GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.Left.Multiplicity, Mode=TwoWay, Converter={StaticResource MultiplicityToBooleanConverter}, ConverterParameter=''}">Unspecified</RadioButton>
+                        <RadioButton GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.Left.Multiplicity, Mode=TwoWay, Converter={StaticResource MultiplicityToBooleanConverter}, ConverterParameter='custom'}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Label Content="Custom:" VerticalAlignment="Center"/>
+                                <TextBox Text="{Binding Path='GoatAssociation.Left.Multiplicity', UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                        </RadioButton>
                     </StackPanel>
-                </RadioButton>
+                </GroupBox>
             </StackPanel>
 
             <StackPanel Margin="3" Grid.Row="6" Grid.Column="1">

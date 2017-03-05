@@ -7,7 +7,7 @@ namespace GoatAssociations.ViewModel
         Model.GoatAssociation _goatAssociation;
         EA.Connector _connector; 
 
-        private void SetLeftOrRight(Model.GoatAssociationEnd GoatEnd, EA.ConnectorEnd EAEnd)
+        private void SetLeftOrRight(Model.GoatAssociationEnd GoatEnd, EA.ConnectorEnd EAEnd, EA.Element MemberEnd)
         {
             GoatEnd.Multiplicity = EAEnd.Cardinality;
             GoatEnd.Aggregation = (Model.AggregationType)EAEnd.Aggregation;
@@ -21,6 +21,7 @@ namespace GoatAssociations.ViewModel
                 case "Non-Navigable": GoatEnd.Navigability = Model.NavigabilityType.NonNavigable; break;
                 case "Unspecified": GoatEnd.Navigability = Model.NavigabilityType.Unspecified; break;
             }
+            GoatEnd.MemberEnd = MemberEnd.Name;
         }
 
         private void UpdateLeftOrRightConnector(Model.GoatAssociationEnd GoatEnd, EA.ConnectorEnd EAEnd)
@@ -40,7 +41,7 @@ namespace GoatAssociations.ViewModel
             EAEnd.Update();
         }
 
-        public GoatAssociation(Model.GoatAssociation GoatAssociation, EA.Connector Connector)
+        public GoatAssociation(Model.GoatAssociation GoatAssociation, EA.Connector Connector, EA.Repository Repository)
         {
             if (Connector.MetaType != "Association" && Connector.MetaType != "Aggregation")
                 throw new ArgumentException($"Wrong MetaType ({Connector.MetaType}) of the Connector.");
@@ -48,8 +49,8 @@ namespace GoatAssociations.ViewModel
             _goatAssociation = GoatAssociation;
             _connector = Connector;
 
-            SetLeftOrRight(_goatAssociation.Left, _connector.ClientEnd);
-            SetLeftOrRight(_goatAssociation.Right, _connector.SupplierEnd);
+            SetLeftOrRight(_goatAssociation.Left, _connector.ClientEnd, Repository.GetElementByID (_connector.ClientID));
+            SetLeftOrRight(_goatAssociation.Right, _connector.SupplierEnd, Repository.GetElementByID(_connector.SupplierID));
         }
 
         public void UpdateConnector()

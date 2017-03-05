@@ -7,7 +7,7 @@ namespace GoatAssociations.ViewModel
     {
         public object Convert(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture)
-                => value.Equals(parameter);
+        => value.Equals(parameter);
 
         public object ConvertBack(object value, Type targetType, object parameter,
             System.Globalization.CultureInfo culture)

@@ -17,6 +17,7 @@ namespace GoatAssociations.ViewModel
         public String EA_Connect(EA.Repository Repository)
         {
             goatAssociationAddin = new ViewModel.GoatAssociationAddin();
+            goatAssociationAddin.Repository = Repository;
             return "";
         }
 
@@ -27,8 +28,20 @@ namespace GoatAssociations.ViewModel
         /// </summary>
         public void EA_Disconnect()
         {
+            goatAssociationAddin.Repository = null; 
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+
+        public void EA_FileNew(EA.Repository Repository)
+        {
+            goatAssociationAddin.Repository = Repository;
+        }
+
+        public void EA_FileOpen(EA.Repository Repository)
+        {
+            goatAssociationAddin.Repository = Repository;
         }
 
 

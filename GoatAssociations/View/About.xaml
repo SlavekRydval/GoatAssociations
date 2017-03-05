@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoatAssociations.View"
         mc:Ignorable="d"
-        Title="About" Height="300" Width="300">
+        Title="About Goat Association!" Height="224.09" Width="353.033">
     <Grid>
-      <Label Content="Ahoj"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/GoatAssociations;component/Resources/kozlik.png" AlignmentX="Right" AlignmentY="Top" Stretch="Uniform"/>
+        </Grid.Background>
+        <Label Content="Ahoj"/>
     </Grid>
 </Window>

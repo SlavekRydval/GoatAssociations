@@ -1,4 +1,5 @@
 ﻿using GoatAssociations.Commands;
+using System;
 
 namespace GoatAssociations.ViewModel
 {
@@ -26,6 +27,9 @@ namespace GoatAssociations.ViewModel
         {
             get { return goatAssociation;  }
         }
+
+        public EA.Repository Repository { get; set; } = null;
+
 
 
         #region commands definition
@@ -66,8 +70,8 @@ namespace GoatAssociations.ViewModel
             {
                 if (_SetRoleNameCommand == null)
                     _SetRoleNameCommand = new RelayCommand<Model.GoatAssociationEnd>(
-                        (ae) => { AdjustRoleName(ae);  },
-                        (ae) => { return true /*(o != null)*/; }
+                        (ae) => { AdjustRoleName(ae); },
+                        (ae) => { return true;  /*(ae != null);*/ } ///JTS, TODO: fix it.
                         );
                 return _SetRoleNameCommand;
             }
@@ -85,7 +89,7 @@ namespace GoatAssociations.ViewModel
 
         private void EditAssociation(EA.Connector conn, RelayCommandWithResult<EA.Connector, bool> command)
         {
-            goatAssociation = new ViewModel.GoatAssociation(new Model.GoatAssociation(), conn);
+            goatAssociation = new ViewModel.GoatAssociation(new Model.GoatAssociation(), conn, Repository);
             try
             {
                 View.GoatAssociation dlg = new View.GoatAssociation();
@@ -102,7 +106,7 @@ namespace GoatAssociations.ViewModel
 
         private void AdjustRoleName(Model.GoatAssociationEnd GoatAssociationEnd)
         {
-            GoatAssociationEnd.Role = "ahoj j8 jsem tonda a nic neum9m";
+            GoatAssociationEnd.Role = GoatAssociationEnd.MemberEnd;
         }
         #endregion
 

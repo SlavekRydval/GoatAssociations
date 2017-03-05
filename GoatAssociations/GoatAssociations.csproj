@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -69,6 +70,7 @@
     <Compile Include="ViewModel\GoatAssociation.cs" />
     <Compile Include="ViewModel\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\GoatAssociationAddin.cs" />
+    <Compile Include="ViewModel\MultiplicityToBooleanConverter.cs" />
     <Compile Include="View\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -111,7 +113,17 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Kozlik.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Association.png" />
+    <Resource Include="Resources\LAggregation.png" />
+    <Resource Include="Resources\LComposition.png" />
+    <Resource Include="Resources\LNavigable.png" />
+    <Resource Include="Resources\LNonNavigable.png" />
+    <Resource Include="Resources\LOwned.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
