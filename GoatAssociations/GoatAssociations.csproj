@@ -124,6 +124,15 @@
     <Resource Include="Resources\LNonNavigable.png" />
     <Resource Include="Resources\LOwned.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ROwned.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\RAggregation.png" />
+    <Resource Include="Resources\RComposition.png" />
+    <Resource Include="Resources\RNavigable.png" />
+    <Resource Include="Resources\RNonNavigable.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
