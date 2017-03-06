@@ -161,7 +161,8 @@ namespace GoatAssociations.ViewModel
                 {
                     goatAssociationAddin.EditAssociationCommand.Execute(conn);
 
-                    if (Repository.GetCurrentDiagram()?.SelectedConnector.ConnectorGUID == conn.ConnectorGUID)
+                    if (goatAssociationAddin.EditAssociationCommand.Result && 
+                        (Repository.GetCurrentDiagram()?.SelectedConnector.ConnectorGUID == conn.ConnectorGUID))
                     {
                         Repository.SaveDiagram (Repository.GetCurrentDiagram().DiagramID);
                         Repository.ReloadDiagram(Repository.GetCurrentDiagram().DiagramID);

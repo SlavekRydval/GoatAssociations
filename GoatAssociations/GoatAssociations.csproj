@@ -70,7 +70,6 @@
     <Compile Include="ViewModel\GoatAssociation.cs" />
     <Compile Include="ViewModel\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\GoatAssociationAddin.cs" />
-    <Compile Include="ViewModel\MultiplicityToBooleanConverter.cs" />
     <Compile Include="View\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
