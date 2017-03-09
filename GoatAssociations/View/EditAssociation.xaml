@@ -7,7 +7,7 @@
         xmlns:viewmodel="clr-namespace:GoatAssociations.ViewModel"
         xmlns:model="clr-namespace:GoatAssociations.Model"
         mc:Ignorable="d"
-        Title="Goat Association!" Height="394.322" Width="611" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Goat the Association!" Height="394.322" Width="611" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <viewmodel:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />

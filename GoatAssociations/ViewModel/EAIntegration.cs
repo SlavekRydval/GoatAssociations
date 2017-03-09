@@ -46,7 +46,7 @@ namespace GoatAssociations.ViewModel
 
 
         const string menuHeader = "-&Goat Associations";
-        const string menuItemAbout = "&About...";
+        const string menuItemAbout = "&About Goat Associations…";
 
         /// <summary>
         /// It is called when EA needs to create menu items for our addin

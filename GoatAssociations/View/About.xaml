@@ -5,11 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoatAssociations.View"
         mc:Ignorable="d"
-        Title="About Goat Association!" Height="224.09" Width="353.033">
+        Title="About Goat Association!" Height="335.09" Width="431.033" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/GoatAssociations;component/Resources/kozlik.png" AlignmentX="Right" AlignmentY="Top" Stretch="Uniform"/>
         </Grid.Background>
-        <Label Content="Ahoj"/>
+        <StackPanel>
+            <TextBlock Margin="10,20,5,5" Text="Goat Associations!" FontSize="26" FontWeight="Bold"/>
+            <TextBlock Margin="10,2,5,5" FontSize="16" Text="Addin for Sparx Enterprise Architect" FontStyle="Italic"/>
+            <TextBlock Margin="10,2,5,5" FontSize="14" Text="Created by Slávek Rydval"/>
+            <TextBlock Margin="10,2,5,5"><Hyperlink NavigateUri="mailto:slavek@rydval.cz" Click="Hyperlink_Click">slavek@rydval.cz</Hyperlink></TextBlock>
+            <TextBlock Margin="10,2,5,5"><Hyperlink NavigateUri="http://www.rydval.cz" Click="Hyperlink_Click">http://www.rydval.cz</Hyperlink></TextBlock>
+            <TextBlock Margin="10,2,5,5" Text="Version 1.0"/>
+            <TextBlock Margin="10,2,5,5">Image of a goat: © <Hyperlink NavigateUri="http://leona-stastna.cz" Click="Hyperlink_Click">Leona Šťastná</Hyperlink></TextBlock>
+            <TextBlock Margin="10,2,5,5">Software licence: <Hyperlink NavigateUri="https://en.wikipedia.org/wiki/MIT_License" Click="Hyperlink_Click">MIT</Hyperlink></TextBlock>
+            <TextBlock Margin="10,2,5,5">Source code: <Hyperlink NavigateUri="https://github.com/SlavekRydval/GoatAssociations" Click="Hyperlink_Click">GitHub</Hyperlink></TextBlock>
+            <Button Margin="10,20,370,0" Content="OK" IsCancel="True" IsDefault="True" />
+        </StackPanel>
     </Grid>
 </Window>
