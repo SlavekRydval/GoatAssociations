@@ -135,6 +135,17 @@ namespace GoatAssociations.ViewModel
         {
             UpdateLeftOrRightConnector(_goatAssociation.Left, _connector.ClientEnd);
             UpdateLeftOrRightConnector(_goatAssociation.Right, _connector.SupplierEnd);
+
+            //fixing design error in Sparx EA, you have to also change _connector.Direction
+            if (_goatAssociation.Left.Navigability == Model.NavigabilityType.Navigable && _goatAssociation.Right.Navigability == Model.NavigabilityType.Navigable)
+                _connector.Direction = "Bi-Directional";
+            else if (_goatAssociation.Left.Navigability != Model.NavigabilityType.Navigable && _goatAssociation.Right.Navigability == Model.NavigabilityType.Navigable)
+                _connector.Direction = "Source -> Destination";
+            else if (_goatAssociation.Left.Navigability == Model.NavigabilityType.Navigable && _goatAssociation.Right.Navigability != Model.NavigabilityType.Navigable)
+                _connector.Direction = "Destination -> Source";
+            else
+                _connector.Direction = "Unspecified";
+
             _connector.Update(); //this is with high probability not neccessarry... could depend on EA version
         }
 
