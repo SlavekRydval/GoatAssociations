@@ -13,7 +13,7 @@ GoatAssociations is an addon for Sparx Enterprise Architect for more friendly ed
 * .NET Framework 4.5 or higher
 
 ## Instalation:
-* Download package
+* [Download package](http://rydval.cz/GoatAssociations/GoatAssociations.zip)
 * Unzip the package into a directory where you want to have the addon
 * Run install.bat (depending on your security settings the computer can require administration rights; the addon is signed with valid certification)
 
