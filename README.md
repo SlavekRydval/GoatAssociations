@@ -1,6 +1,6 @@
 # GoatAssociations
 
-GoatAssociations is an addon for Sparx Enterprise Architect for more friendly editing of associations.
+**GoatAssociations** is an addon for Sparx Enterprise Architect for more friendly editing of associations.
 
 ![alt tag](http://rydval.cz/res/GitHub/GoatAssociations/GoatAssociations.png)
 
@@ -18,5 +18,5 @@ GoatAssociations is an addon for Sparx Enterprise Architect for more friendly ed
 3. Run install.bat (depending on your security settings the computer can require administration rights; the addon is signed with valid certification)
 
 ## Licence:
-* goat image
-* rest of files
+* Goat image used in about dialog is copyrighted by [Leona Štastná](http://www.leona-stastna.cz) and you cannot use it without her permission.
+* Rest of files are under MIT licence.
