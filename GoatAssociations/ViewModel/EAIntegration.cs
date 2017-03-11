@@ -65,7 +65,7 @@ namespace GoatAssociations.ViewModel
                     return menuHeader;
                 // return all items for main menu
                 case menuHeader:
-                    string[] subMenus = { menuItemAbout, "TEST" };
+                    string[] subMenus = { menuItemAbout };
                     return subMenus;
             }
 
@@ -88,9 +88,6 @@ namespace GoatAssociations.ViewModel
                 case menuItemAbout:
                     IsEnabled = goatAssociationAddin.AboutCommand.CanExecute(null);
                     break;
-                case "TEST":
-                    IsEnabled = true;
-                    break;
                 default:
                     IsEnabled = false;
                     break;
@@ -110,18 +107,6 @@ namespace GoatAssociations.ViewModel
             {
                 case menuItemAbout:
                     goatAssociationAddin.AboutCommand.Execute(null);
-                    break;
-                case "TEST":
-                    //                  select connector_id, name, start_object_id, end_object_id, direction, sourcecard, destcard, sourceisnavigable, destisnavigable, sourcestyle, deststyle
-                    //from t_connector
-                    //  where name = 'goat'
-                    EA.Connector c = Repository.GetCurrentDiagram().SelectedConnector;
-                    c.ClientEnd.Navigable = "Non-Navigable";
-                    //c.ClientEnd.OwnedByClassifier = true; 
-                    c.ClientEnd.Update();
-                    c.Update();
-                    Repository.SaveDiagram(Repository.GetCurrentDiagram().DiagramID);
-                    Repository.ReloadDiagram(Repository.GetCurrentDiagram().DiagramID);
                     break;
                 default:
                     throw new NotImplementedException($"Operation: {nameof (EA_MenuClick)} {nameof (ItemName)}:{ItemName}");
