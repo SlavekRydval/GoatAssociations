@@ -12,7 +12,23 @@ namespace GoatAssociations.Model
     class GoatAssociationEnd : NotifyPropertyClass
     {
         public NavigabilityType Navigability { get; set; } = NavigabilityType.Unspecified;
-        public AggregationType Aggregation { get; set; } = AggregationType.None;
+
+        private AggregationType _aggregation = AggregationType.None;
+        public AggregationType Aggregation
+        {
+            get
+            {
+                return _aggregation;
+            }
+            set
+            {
+                if (_aggregation != value)
+                {
+                    _aggregation = value;
+                    this.OnPropertyChanged(nameof(Aggregation));
+                }
+            }
+        }
 
         private string _multiplicity = "";
         public string Multiplicity
