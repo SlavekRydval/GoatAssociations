@@ -1,17 +1,18 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using System;
 
 namespace GoatAssociations.ViewModel
 {
 
     enum MultiplicityType { None, ZeroToOne, ZeroToMany, One, OneToMany, Many, Other }
 
-    class GoatAssociation : Model.NotifyPropertyClass
+    class GoatAssociation : ViewModelBase
     {
-        private Model.GoatAssociation _goatAssociation;
+        private Model.GoatAssociationModel _goatAssociation;
         private EA.Connector _connector;
 
-        public Model.GoatAssociationEnd Left { get { return _goatAssociation.Left; } }
-        public Model.GoatAssociationEnd Right { get { return _goatAssociation.Right; } }
+        public Model.GoatAssociationEndModel Left { get { return _goatAssociation.Left; } }
+        public Model.GoatAssociationEndModel Right { get { return _goatAssociation.Right; } }
 
         /// <summary>
         /// Constructor sets up the GoatAssociation according to parameters
@@ -19,7 +20,7 @@ namespace GoatAssociations.ViewModel
         /// <param name="GoatAssociation">instance of Model.GoatAssociation</param>
         /// <param name="Connector">Connector as a source of data</param>
         /// <param name="Repository">Repository where the connector is located</param>
-        public GoatAssociation(Model.GoatAssociation GoatAssociation, EA.Connector Connector, EA.Repository Repository)
+        public GoatAssociation(Model.GoatAssociationModel GoatAssociation, EA.Connector Connector, EA.Repository Repository)
         {
             if (Connector.MetaType != "Association" && Connector.MetaType != "Aggregation")
                 throw new ArgumentException($"Wrong MetaType ({Connector.MetaType}) of the Connector.");
@@ -43,7 +44,7 @@ namespace GoatAssociations.ViewModel
         /// <param name="GoatEnd">instance of GoatAssociationEnd that will be set</param>
         /// <param name="EAEnd">instance of EA.ConnectorEnd</param>
         /// <param name="MemberEnd">element that is at the connector end</param>
-        private void SetLeftOrRight(Model.GoatAssociationEnd GoatEnd, EA.ConnectorEnd EAEnd, EA.Element MemberEnd)
+        private void SetLeftOrRight(Model.GoatAssociationEndModel GoatEnd, EA.ConnectorEnd EAEnd, EA.Element MemberEnd)
         {
             GoatEnd.Multiplicity = EAEnd.Cardinality;
             GoatEnd.Aggregation = (Model.AggregationType)EAEnd.Aggregation;
@@ -65,7 +66,7 @@ namespace GoatAssociations.ViewModel
         /// </summary>
         /// <param name="GoatEnd">instance of Model.GoatAssociationEnd as a source</param>
         /// <param name="EAEnd">instance of EA.ConnectorEnd as a target</param>
-        private void UpdateLeftOrRightConnector(Model.GoatAssociationEnd GoatEnd, EA.ConnectorEnd EAEnd)
+        private void UpdateLeftOrRightConnector(Model.GoatAssociationEndModel GoatEnd, EA.ConnectorEnd EAEnd)
         {
             EAEnd.Cardinality = GoatEnd.Multiplicity;
             EAEnd.Aggregation = (int)GoatEnd.Aggregation;
@@ -85,12 +86,12 @@ namespace GoatAssociations.ViewModel
         /// TODO: Refactoring of Right_PropertyChanged and Left_PropertyChanged
         private void Right_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (!(sender is Model.GoatAssociationEnd))
-                throw new ArgumentException($"Sender has to be of {nameof (Model)}.{nameof (Model.GoatAssociationEnd)} type.");
+            if (!(sender is Model.GoatAssociationEndModel))
+                throw new ArgumentException($"Sender has to be of {nameof (Model)}.{nameof (Model.GoatAssociationEndModel)} type.");
 
-            if (e.PropertyName == nameof(Model.GoatAssociationEnd.Multiplicity))
+            if (e.PropertyName == nameof(Model.GoatAssociationEndModel.Multiplicity))
             {
-                switch (((Model.GoatAssociationEnd) sender).Multiplicity)
+                switch (((Model.GoatAssociationEndModel) sender).Multiplicity)
                 {
                     case "": RightMultiplicityType = MultiplicityType.None; break;
                     case "1": RightMultiplicityType = MultiplicityType.One; break;
@@ -99,7 +100,7 @@ namespace GoatAssociations.ViewModel
                     case "0..*": RightMultiplicityType = MultiplicityType.ZeroToMany; break;
                     case "*": RightMultiplicityType = MultiplicityType.Many; break;
                     default:
-                        RightCustomMultiplicity = ((Model.GoatAssociationEnd)sender).Multiplicity;
+                        RightCustomMultiplicity = ((Model.GoatAssociationEndModel)sender).Multiplicity;
                         RightMultiplicityType = MultiplicityType.Other;
                         break;
                 }
@@ -107,12 +108,12 @@ namespace GoatAssociations.ViewModel
         }
         private void Left_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (!(sender is Model.GoatAssociationEnd))
-                throw new ArgumentException($"Sender has to be of {nameof(Model)}.{nameof(Model.GoatAssociationEnd)} type.");
+            if (!(sender is Model.GoatAssociationEndModel))
+                throw new ArgumentException($"Sender has to be of {nameof(Model)}.{nameof(Model.GoatAssociationEndModel)} type.");
             
-            if (e.PropertyName == nameof(Model.GoatAssociationEnd.Multiplicity))
+            if (e.PropertyName == nameof(Model.GoatAssociationEndModel.Multiplicity))
             {
-                switch (((Model.GoatAssociationEnd)sender).Multiplicity)
+                switch (((Model.GoatAssociationEndModel)sender).Multiplicity)
                 {
                     case "": LeftMultiplicityType = MultiplicityType.None; break;
                     case "1": LeftMultiplicityType = MultiplicityType.One; break;
@@ -121,7 +122,7 @@ namespace GoatAssociations.ViewModel
                     case "0..*": LeftMultiplicityType = MultiplicityType.ZeroToMany; break;
                     case "*": LeftMultiplicityType = MultiplicityType.Many; break;
                     default:
-                        LeftCustomMultiplicity = ((Model.GoatAssociationEnd)sender).Multiplicity;
+                        LeftCustomMultiplicity = ((Model.GoatAssociationEndModel)sender).Multiplicity;
                         LeftMultiplicityType = MultiplicityType.Other;
                         break;
                 }
@@ -172,7 +173,7 @@ namespace GoatAssociations.ViewModel
         /// <param name="NewValue">New value for the property/attribute</param>
         /// <param name="AssociationEnd">instance of AssociationEnd whose Multiplicity will be changed</param>
         /// <param name="NameOfProperty">name of the property that is going to be changed</param>
-        private void SetLeftOrRightMultiplicityType(ref MultiplicityType LeftRightMultiplicityType, MultiplicityType NewValue, Model.GoatAssociationEnd AssociationEnd, string NameOfProperty)
+        private void SetLeftOrRightMultiplicityType(ref MultiplicityType LeftRightMultiplicityType, MultiplicityType NewValue, Model.GoatAssociationEndModel AssociationEnd, string NameOfProperty)
         {
             if (LeftRightMultiplicityType != NewValue)
             {
@@ -204,7 +205,7 @@ namespace GoatAssociations.ViewModel
                     default:
                         throw new NotImplementedException($"setter of {NameOfProperty}");
                 }
-                this.OnPropertyChanged(NameOfProperty);
+                RaisePropertyChanged(NameOfProperty);
             }
         }
         #endregion
@@ -234,7 +235,7 @@ namespace GoatAssociations.ViewModel
         /// <param name="ChangedPropertyName">Name of property that is changed</param>
         private void SetRightOrLeftCustomMultiplicity(ref string CustomMultiplicity, 
                                                       string NewValue, 
-                                                      Model.GoatAssociationEnd GoatAssociationEnd,
+                                                      Model.GoatAssociationEndModel GoatAssociationEnd,
                                                       MultiplicityType MultiplicityType,
                                                       string ChangedPropertyName)
         {
@@ -243,7 +244,7 @@ namespace GoatAssociations.ViewModel
                 CustomMultiplicity = NewValue;
                 GoatAssociationEnd.Multiplicity = NewValue;
                 MultiplicityType = MultiplicityType.Other;
-                this.OnPropertyChanged(ChangedPropertyName);
+                RaisePropertyChanged(ChangedPropertyName);
 
             }
             

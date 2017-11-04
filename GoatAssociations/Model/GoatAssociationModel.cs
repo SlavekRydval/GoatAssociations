@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GalaSoft.MvvmLight;
 
 namespace GoatAssociations.Model
 {
-    class GoatAssociation
+    public class GoatAssociationModel: ObservableObject
     {
-        public GoatAssociationEnd Left { get; set; } = new GoatAssociationEnd();
-        public GoatAssociationEnd Right { get; set; } = new GoatAssociationEnd();
+        public GoatAssociationEndModel Left { get; set; } = new GoatAssociationEndModel();
+        public GoatAssociationEndModel Right { get; set; } = new GoatAssociationEndModel();
+
+        private string _name = ""; 
+        public string Name
+        {
+            get => _name;
+            set => Set (nameof (Name), ref _name, value);
+        }
 
 
-        public GoatAssociation()
+        public GoatAssociationModel()
         {
             Left.PropertyChanged += LeftRight_PropertyChanged;
             Right.PropertyChanged += LeftRight_PropertyChanged;
@@ -21,7 +24,7 @@ namespace GoatAssociations.Model
         //MVVM question: Is this really Model stuff or should it be moved to ViewModel?
         private void LeftRight_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(GoatAssociationEnd.Aggregation))
+            if (e.PropertyName == nameof(GoatAssociationEndModel.Aggregation))
             {
                 if (sender == Left)
                 {

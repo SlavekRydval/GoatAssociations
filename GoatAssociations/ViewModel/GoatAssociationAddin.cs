@@ -1,23 +1,21 @@
-﻿using GoatAssociations.Commands;
-using System;
+﻿using GalaSoft.MvvmLight;
+using GoatAssociations.Commands;
 
 namespace GoatAssociations.ViewModel
 {
-    class GoatAssociationAddin: Model.NotifyPropertyClass
+    class GoatAssociationAddin: ViewModelBase
     {
         public Model.AddinInformation AddinInformation { get; } = new Model.AddinInformation();
 
         private ViewModel.GoatAssociation _goatAssociation; 
         public ViewModel.GoatAssociation Association
         {
-            get
-            {
-                return _goatAssociation;
-            }
+            get => _goatAssociation;
             set
             {
-                _goatAssociation = value;
-                this.OnPropertyChanged(nameof (Association));
+                Set(nameof (Association), ref _goatAssociation, value);
+                //_goatAssociation = value;
+                //this.OnPropertyChanged(nameof (Association));
             }
         }
 
@@ -25,7 +23,7 @@ namespace GoatAssociations.ViewModel
         private ViewModel.GoatAssociation goatAssociation = null;
         public ViewModel.GoatAssociation GoatAssociation
         {
-            get { return goatAssociation;  }
+            get => goatAssociation;
         }
 
         public EA.Repository Repository { get; set; } = null;
@@ -63,13 +61,13 @@ namespace GoatAssociations.ViewModel
             }
         }
 
-        private RelayCommand<Model.GoatAssociationEnd> _SetRoleNameCommand;
-        public RelayCommand<Model.GoatAssociationEnd> SetRoleNameCommand
+        private RelayCommand<Model.GoatAssociationEndModel> _SetRoleNameCommand;
+        public RelayCommand<Model.GoatAssociationEndModel> SetRoleNameCommand
         {
             get
             {
                 if (_SetRoleNameCommand == null)
-                    _SetRoleNameCommand = new RelayCommand<Model.GoatAssociationEnd>(
+                    _SetRoleNameCommand = new RelayCommand<Model.GoatAssociationEndModel>(
                         (ae) => { AdjustRoleName(ae); },
                         (ae) => { return true;  /*(ae != null);*/ } ///JTS, TODO: fix it.
                         );
@@ -89,7 +87,7 @@ namespace GoatAssociations.ViewModel
 
         private void EditAssociation(EA.Connector conn, RelayCommandWithResult<EA.Connector, bool> command)
         {
-            goatAssociation = new ViewModel.GoatAssociation(new Model.GoatAssociation(), conn, Repository);
+            goatAssociation = new ViewModel.GoatAssociation(new Model.GoatAssociationModel(), conn, Repository);
             try
             {
                 View.GoatAssociation dlg = new View.GoatAssociation();
@@ -104,7 +102,7 @@ namespace GoatAssociations.ViewModel
             }
         }
 
-        private void AdjustRoleName(Model.GoatAssociationEnd GoatAssociationEnd)
+        private void AdjustRoleName(Model.GoatAssociationEndModel GoatAssociationEnd)
         {
             GoatAssociationEnd.Role = GoatAssociationEnd.MemberEnd;
         }

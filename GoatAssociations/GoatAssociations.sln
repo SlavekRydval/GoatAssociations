@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatAssociations", "GoatAssociations.csproj", "{3CCA177B-EA0E-4FFE-814F-68F6395114E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoatAssociationUnitTests", "..\GoatAssociationUnitTests\GoatAssociationUnitTests.csproj", "{6CA1C13D-B7C9-4A83-BFDE-E8ED8899D70F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{3CCA177B-EA0E-4FFE-814F-68F6395114E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CCA177B-EA0E-4FFE-814F-68F6395114E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CCA177B-EA0E-4FFE-814F-68F6395114E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CA1C13D-B7C9-4A83-BFDE-E8ED8899D70F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CA1C13D-B7C9-4A83-BFDE-E8ED8899D70F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CA1C13D-B7C9-4A83-BFDE-E8ED8899D70F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CA1C13D-B7C9-4A83-BFDE-E8ED8899D70F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33CA4B8D-77D8-4DD2-A50F-90460E39BF4D}
 	EndGlobalSection
 EndGlobal
