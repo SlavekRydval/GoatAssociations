@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GoatAssociations.Model;
-using System;
+
 
 namespace GoatAssociationUnitTests
 {
@@ -59,17 +59,63 @@ namespace GoatAssociationUnitTests
         }
 
         [TestMethod]
-        public void NavigabilityAndOwnership()
+        public void IsOwnedByClassifierDoesntMeanNonNavigable()
         {
-            ///TODO: two tests just like above
-            throw new NotImplementedException();
+            //it is not a UML rule but is reasonable
+            GoatAssociationEndModel AssociationEnd = new GoatAssociationEndModel
+            {
+                Navigability = NavigabilityType.NonNavigable,
+                IsOwnedByClassifier = true
+
+            };
+            Assert.IsTrue(AssociationEnd.IsOwnedByClassifier, "IsOwnedByClassifier is not true.");
+            Assert.IsTrue(AssociationEnd.Navigability != NavigabilityType.NonNavigable, "Navigability failure.");
+
         }
 
         [TestMethod]
-        public void ComplexTest()
+        public void NavigabilityChangeMeansPossibleOwnershipChange()
         {
-            ///TODO: two tests just like above
-            throw new NotImplementedException();
+            //it is not a UML rule but is reasonable
+            GoatAssociationEndModel AssociationEnd = new GoatAssociationEndModel
+            {
+                IsOwnedByClassifier = true,
+                Navigability = NavigabilityType.NonNavigable
+
+            };
+            Assert.IsTrue(AssociationEnd.Navigability == NavigabilityType.NonNavigable, "AssociationEnd.Navigability != NavigabilityType.NonNavigable.");
+            Assert.IsFalse(AssociationEnd.IsOwnedByClassifier, "Ownership failure.");
+
+        }
+
+
+        [TestMethod]
+        public void MoreComplexTest()
+        {
+            GoatAssociationEndModel AssociationEnd = new GoatAssociationEndModel
+            {
+                Role = nameof (AssociationEnd),
+                Aggregation = AggregationType.None,
+                Multiplicity = "10",
+                Union = false,
+                Derived = false
+            };
+
+            Assert.IsTrue(AssociationEnd.Role == nameof(AssociationEnd) && AssociationEnd.Aggregation == AggregationType.None &&
+                AssociationEnd.Multiplicity == "10" && !AssociationEnd.Union && !AssociationEnd.Derived, "Test 1");
+
+            AssociationEnd.Union = true;
+            Assert.IsTrue(AssociationEnd.Role == nameof(AssociationEnd) && AssociationEnd.Aggregation == AggregationType.None &&
+                AssociationEnd.Multiplicity == "10" && AssociationEnd.Union && AssociationEnd.Derived, "Test 2");
+
+            AssociationEnd.Aggregation = AggregationType.Composite;
+            Assert.IsTrue(AssociationEnd.Role == nameof(AssociationEnd) && AssociationEnd.Aggregation == AggregationType.Composite &&
+                AssociationEnd.Multiplicity == GoatAssociationEndModel.MultiplicityWhenCompostite && 
+                AssociationEnd.Union && AssociationEnd.Derived, "Test 3");
+
+            AssociationEnd.Multiplicity = "10..15";
+            Assert.IsTrue(AssociationEnd.Role == nameof(AssociationEnd) && AssociationEnd.Aggregation == AggregationType.None &&
+                AssociationEnd.Multiplicity == "10..15" && AssociationEnd.Union && AssociationEnd.Derived, "Test 4");
         }
 
     }

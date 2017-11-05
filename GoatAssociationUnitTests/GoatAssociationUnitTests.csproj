@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AssociationEndModelUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AssociationModelUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
