@@ -83,13 +83,19 @@
   <ItemGroup>
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\RelayCommandWithResult.cs" />
+    <Compile Include="Design\DesignAssociationService.cs" />
+    <Compile Include="Helpers\DialogService.cs" />
+    <Compile Include="Helpers\IDialogService.cs" />
     <Compile Include="Model\AddinInformation.cs" />
+    <Compile Include="Model\GoatAssociationService.cs" />
+    <Compile Include="Model\IGoatAssociationService.cs" />
     <Compile Include="ViewModel\EAIntegration.cs" />
     <Compile Include="Model\GoatAssociationModel.cs" />
     <Compile Include="Model\GoatAssociationEndModel.cs" />
     <Compile Include="ViewModel\GoatAssociation.cs" />
     <Compile Include="ViewModel\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\GoatAssociationAddin.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -159,6 +165,7 @@
     <Resource Include="Resources\RNavigable.png" />
     <Resource Include="Resources\RNonNavigable.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

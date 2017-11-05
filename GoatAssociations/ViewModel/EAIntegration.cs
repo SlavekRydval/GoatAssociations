@@ -16,8 +16,10 @@ namespace GoatAssociations.ViewModel
         /// <returns></returns>
         public String EA_Connect(EA.Repository Repository)
         {
-            goatAssociationAddin = new ViewModel.GoatAssociationAddin();
-            goatAssociationAddin.Repository = Repository;
+            goatAssociationAddin = new ViewModel.GoatAssociationAddin
+            {
+                Repository = Repository
+            };
             return "";
         }
 
@@ -33,16 +35,17 @@ namespace GoatAssociations.ViewModel
             GC.WaitForPendingFinalizers();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Repository"></param>
+        public void EA_FileNew(EA.Repository Repository) => goatAssociationAddin.Repository = Repository;
 
-        public void EA_FileNew(EA.Repository Repository)
-        {
-            goatAssociationAddin.Repository = Repository;
-        }
-
-        public void EA_FileOpen(EA.Repository Repository)
-        {
-            goatAssociationAddin.Repository = Repository;
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Repository"></param>
+        public void EA_FileOpen(EA.Repository Repository) => goatAssociationAddin.Repository = Repository;
 
 
         const string menuHeader = "-&Goat Associations";
