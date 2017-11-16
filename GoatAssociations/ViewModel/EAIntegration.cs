@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoatAssociations.Helpers;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -8,6 +9,8 @@ namespace GoatAssociations.ViewModel
     {
         private ViewModel.GoatAssociationAddin goatAssociationAddin = null;
 
+        private MainViewModel mainVieModel = null; 
+
 
         /// <summary>
         /// 
@@ -16,10 +19,22 @@ namespace GoatAssociations.ViewModel
         /// <returns></returns>
         public String EA_Connect(EA.Repository Repository)
         {
+            
+            //MessageBox.Show("GoatAssociation: Append debugger, if needed.");
+
             goatAssociationAddin = new ViewModel.GoatAssociationAddin
             {
                 Repository = Repository
             };
+
+            mainVieModel = new MainViewModel
+                (
+                    null, 
+                    new DialogService()
+                );
+
+
+
             return "";
         }
 
@@ -89,7 +104,7 @@ namespace GoatAssociations.ViewModel
             switch (ItemName)
             {
                 case menuItemAbout:
-                    IsEnabled = goatAssociationAddin.AboutCommand.CanExecute(null);
+                    IsEnabled = mainVieModel.AboutCommand.CanExecute(null);// goatAssociationAddin.AboutCommand.CanExecute(null);
                     break;
                 default:
                     IsEnabled = false;
@@ -109,7 +124,8 @@ namespace GoatAssociations.ViewModel
             switch (ItemName)
             {
                 case menuItemAbout:
-                    goatAssociationAddin.AboutCommand.Execute(null);
+                    mainVieModel.AboutCommand.Execute(null);
+                    //goatAssociationAddin.AboutCommand.Execute(null);
                     break;
                 default:
                     throw new NotImplementedException($"Operation: {nameof (EA_MenuClick)} {nameof (ItemName)}:{ItemName}");

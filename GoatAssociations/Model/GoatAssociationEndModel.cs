@@ -6,6 +6,7 @@ namespace GoatAssociations.Model
     /// Type of navigability of the association end
     /// </summary>
     public enum NavigabilityType { Unspecified, Navigable, NonNavigable }
+
     /// <summary>
     /// Aggregation type of the association end
     /// </summary>
@@ -89,7 +90,12 @@ namespace GoatAssociations.Model
             }
         }
 
-        public string MemberEnd { get; set; } = "";
+        private string _memberEnd = "";
+        public string MemberEnd
+        {
+            get => _memberEnd;
+            set => Set(nameof (MemberEnd), ref _memberEnd, value);
+        }
 
         private string _role = "";
         public string Role

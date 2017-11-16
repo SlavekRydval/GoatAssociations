@@ -86,7 +86,7 @@
     <Compile Include="Design\DesignAssociationService.cs" />
     <Compile Include="Helpers\DialogService.cs" />
     <Compile Include="Helpers\IDialogService.cs" />
-    <Compile Include="Model\AddinInformation.cs" />
+    <Compile Include="Model\AddinInformationModel.cs" />
     <Compile Include="Model\GoatAssociationService.cs" />
     <Compile Include="Model\IGoatAssociationService.cs" />
     <Compile Include="ViewModel\EAIntegration.cs" />
@@ -95,6 +95,7 @@
     <Compile Include="ViewModel\GoatAssociation.cs" />
     <Compile Include="ViewModel\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\GoatAssociationAddin.cs" />
+    <Compile Include="ViewModel\GoatAssociationViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>

@@ -4,9 +4,13 @@ namespace GoatAssociations.Helpers
 {
     class DialogService : IDialogService
     {
-        public void ShowAboutDialog()
+        public void ShowAboutDialog(object DataContext)
         {
-            throw new NotImplementedException();
+            var About = new View.About
+            {
+                DataContext = this
+            };
+            About.ShowDialog();
         }
 
         public void ShowError(string Message)

@@ -5,7 +5,6 @@ namespace GoatAssociations.ViewModel
 {
     class GoatAssociationAddin: ViewModelBase
     {
-        public Model.AddinInformation AddinInformation { get; } = new Model.AddinInformation();
 
         private ViewModel.GoatAssociation _goatAssociation; 
         public ViewModel.GoatAssociation Association
@@ -31,20 +30,6 @@ namespace GoatAssociations.ViewModel
 
 
         #region commands definition
-        private RelayCommand _AboutCommand;
-        public RelayCommand AboutCommand
-        {
-            get
-            {
-                if (_AboutCommand == null)
-                    _AboutCommand = new RelayCommand(
-                        () => { About(); }, //Execute
-                        () => { return true; } //CanExecute
-                    );
-
-                return _AboutCommand;
-            }
-        }
 
         private RelayCommandWithResult<EA.Connector, bool> _EditAssociationCommand;
         public RelayCommandWithResult<EA.Connector, bool> EditAssociationCommand
@@ -61,6 +46,7 @@ namespace GoatAssociations.ViewModel
             }
         }
 
+        //////START OBSOLETE
         private RelayCommand<Model.GoatAssociationEndModel> _SetRoleNameCommand;
         public RelayCommand<Model.GoatAssociationEndModel> SetRoleNameCommand
         {
@@ -74,16 +60,13 @@ namespace GoatAssociations.ViewModel
                 return _SetRoleNameCommand;
             }
         }
+        ////////END OBSOLETE
+
+
         #endregion
 
         #region commands execution
 
-        private void About()
-        {
-            var About = new View.About();
-            About.DataContext = this;
-            About.ShowDialog();
-        }
 
         private void EditAssociation(EA.Connector conn, RelayCommandWithResult<EA.Connector, bool> command)
         {
@@ -102,10 +85,12 @@ namespace GoatAssociations.ViewModel
             }
         }
 
+        //////START OBSOLETE
         private void AdjustRoleName(Model.GoatAssociationEndModel GoatAssociationEnd)
         {
             GoatAssociationEnd.Role = GoatAssociationEnd.MemberEnd;
         }
+        ////////END OBSOLETE
         #endregion
 
     }

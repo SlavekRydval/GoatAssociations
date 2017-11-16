@@ -1,11 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using GoatAssociations.Helpers;
 using GoatAssociations.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GoatAssociations.ViewModel
 {
@@ -33,7 +29,23 @@ namespace GoatAssociations.ViewModel
         {
             associationService = AssociationService;
             dialogService = DialogService;
+
+            AboutCommand = new RelayCommand(() => dialogService.ShowAboutDialog(new AddinInformationModel()));
         }
+
+
+        /// <summary>
+        /// Shows About Information
+        /// </summary>
+        public RelayCommand AboutCommand
+        {
+            get;
+            private set;
+        }
+
+
+        public RelayCommand EditAssociationPropertiesCommand ;
+
 
     }
 }
