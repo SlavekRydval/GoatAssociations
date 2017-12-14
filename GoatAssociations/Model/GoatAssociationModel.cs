@@ -1,13 +1,16 @@
-﻿using GalaSoft.MvvmLight;
-
-namespace GoatAssociations.Model
+﻿namespace GoatAssociations.Model
 {
+    using GalaSoft.MvvmLight;
+
     public class GoatAssociationModel: ObservableObject
     {
         public GoatAssociationEndModel Left { get; set; } = new GoatAssociationEndModel();
         public GoatAssociationEndModel Right { get; set; } = new GoatAssociationEndModel();
 
         private string _name = ""; 
+        /// <summary>
+        /// Name of the association, can be set by a user
+        /// </summary>
         public string Name
         {
             get => _name;

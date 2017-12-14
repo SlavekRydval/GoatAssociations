@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GoatAssociations.Model
+﻿namespace GoatAssociations.Model
 {
-    class AddinInformationModel
+    class GoatAddinInformationModel
     {
         public string AddinName { get; } = "Goat Associatons!";
         public string AddinInfo { get; } = "Addin for Sparx Enterprise Architect";

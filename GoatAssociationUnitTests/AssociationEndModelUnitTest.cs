@@ -42,6 +42,11 @@ namespace GoatAssociationUnitTests
             };
             Assert.IsTrue(AssociationEnd.Aggregation == AggregationType.Composite, "Aggregation is not Composite!");
             Assert.IsTrue(AssociationEnd.Multiplicity == GoatAssociationEndModel.MultiplicityWhenCompostite, "Multiplicity wasn't changed.");
+
+            AssociationEnd.Aggregation = AggregationType.None;
+            AssociationEnd.Multiplicity = "";
+            AssociationEnd.Aggregation = AggregationType.Composite;
+            Assert.IsTrue(AssociationEnd.Multiplicity == "", "Multiplicity has been changed.");
         }
 
         [TestMethod]

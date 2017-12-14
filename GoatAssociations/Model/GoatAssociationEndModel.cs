@@ -1,7 +1,7 @@
-﻿using GalaSoft.MvvmLight;
-
-namespace GoatAssociations.Model
+﻿namespace GoatAssociations.Model
 {
+    using GalaSoft.MvvmLight;
+
     /// <summary>
     /// Type of navigability of the association end
     /// </summary>
@@ -20,6 +20,9 @@ namespace GoatAssociations.Model
         public const string MultiplicityWhenCompostite = "0..1";
 
         private NavigabilityType _navigability = NavigabilityType.Unspecified;
+        /// <summary>
+        /// Navigability of the association end
+        /// </summary>
         public NavigabilityType Navigability
         {
             get => _navigability;
@@ -40,7 +43,8 @@ namespace GoatAssociations.Model
             get => _aggregation;
             set {
                 Set(nameof(Aggregation), ref _aggregation, value);
-                if (Aggregation == AggregationType.Composite && Multiplicity != "0" && Multiplicity != "0..1" && Multiplicity != "1")
+                if (Aggregation == AggregationType.Composite && Multiplicity != "0" && 
+                    Multiplicity != "0..1" && Multiplicity != "1" && !string.IsNullOrWhiteSpace(Multiplicity))
                     Multiplicity = MultiplicityWhenCompostite;
             }
         }
@@ -52,7 +56,8 @@ namespace GoatAssociations.Model
             get => _multiplicity;
             set {
                 Set(nameof(Multiplicity), ref _multiplicity, value);
-                if (Aggregation == AggregationType.Composite && Multiplicity != "0" && Multiplicity != "0..1" && Multiplicity != "1")
+                if (Aggregation == AggregationType.Composite && 
+                    Multiplicity != "0" && Multiplicity != "0..1" && Multiplicity != "1" && !string.IsNullOrWhiteSpace(Multiplicity))
                     Aggregation = AggregationType.None;
             }
         }
