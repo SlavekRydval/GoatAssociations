@@ -1,8 +1,8 @@
-﻿using GoatAssociations.Model;
-using System;
-
-namespace GoatAssociations.Design
+﻿namespace GoatAssociations.Design
 {
+    using GoatAssociations.Model.AssociationModel;
+    using System;
+
     class DesignAssociationService : IGoatAssociationService
     {
         public GoatAssociationModel Read()

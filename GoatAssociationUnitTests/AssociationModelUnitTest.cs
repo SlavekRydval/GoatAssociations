@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GoatAssociations.Model;
+using GoatAssociations.Model.AssociationModel;
 using System;
 
 namespace GoatAssociationUnitTests

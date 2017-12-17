@@ -19,7 +19,7 @@ namespace GoatAssociations.ViewModel
             this.Repository = Repository;
             this.DialogService = DialogService;
 
-            AboutCommand = new GalaSoft.MvvmLight.Command.RelayCommand(() => DialogService.ShowAboutDialog(new Model.GoatAddinInformationModel()));
+            AboutCommand = new GalaSoft.MvvmLight.Command.RelayCommand(() => DialogService.ShowAboutDialog(new Model.MetadataModel.GoatAddinInformationModel()));
 
             EditAssociationCommand = new RelayCommandWithResult<EA.Connector, bool>(
                 (connector) => { EditAssociation(connector, EditAssociationCommand); },
@@ -29,7 +29,6 @@ namespace GoatAssociations.ViewModel
 
         //properties
         public EA.Repository Repository { get; set; } = null;
-
 
         #region Commands definition
         /// <summary>
@@ -53,31 +52,15 @@ namespace GoatAssociations.ViewModel
 
         //--------up to here is refactoring done-----
 
-
-        private ViewModel.GoatAssociation _goatAssociation; 
-        public ViewModel.GoatAssociation Association
-        {
-            get => _goatAssociation;
-            set => Set(nameof(Association), ref _goatAssociation, value);
-        }
-
-
-        private ViewModel.GoatAssociation goatAssociation = null;
-        public ViewModel.GoatAssociation GoatAssociation
-        {
-            get => goatAssociation;
-        }
-
-
         #region commands definition
         //////START OBSOLETE
-        private RelayCommand<Model.GoatAssociationEndModel> _SetRoleNameCommand;
-        public RelayCommand<Model.GoatAssociationEndModel> SetRoleNameCommand
+        private RelayCommand<Model.AssociationModel.GoatAssociationEndModel> _SetRoleNameCommand;
+        public RelayCommand<Model.AssociationModel.GoatAssociationEndModel> SetRoleNameCommand
         {
             get
             {
                 if (_SetRoleNameCommand == null)
-                    _SetRoleNameCommand = new RelayCommand<Model.GoatAssociationEndModel>(
+                    _SetRoleNameCommand = new RelayCommand<Model.AssociationModel.GoatAssociationEndModel>(
                         (ae) => { AdjustRoleName(ae); },
                         (ae) => { return true;  /*(ae != null);*/ } ///JTS, TODO: fix it.
                         );
@@ -88,29 +71,22 @@ namespace GoatAssociations.ViewModel
         #endregion
 
         #region commands execution
-
-
-
         private void EditAssociation(EA.Connector EAConnector, RelayCommandWithResult<EA.Connector, bool> command)
         {
-            goatAssociation = new ViewModel.GoatAssociation(new Model.GoatAssociationModel(), EAConnector, Repository);
-            try
-            {
-                View.GoatAssociation dlg = new View.GoatAssociation();
-                dlg.DataContext = this;
-                command.Result = (dlg.ShowDialog() == true);
-                if (command.Result)
-                    goatAssociation.UpdateConnector();
-            }
-            finally
-            {
-                goatAssociation = null;
-            }
+            //MVVM code
+            //step 1: create new viewmodel
+            //step 2: prepare data
+            //step 3: call a command for editing an association
+
+            var x = new AssociationViewModel.GoatAssociationViewModel(new Model.AssociationModel.GoatAssociationService(EAConnector, Repository), DialogService);
+            x.EditAssociationCommand.Execute(this);
+            command.Result = x.EditAssociationCommand.Result;
+            return;
         }
 
 
         //////START OBSOLETE
-        private void AdjustRoleName(Model.GoatAssociationEndModel GoatAssociationEnd)
+        private void AdjustRoleName(Model.AssociationModel.GoatAssociationEndModel GoatAssociationEnd)
         {
             GoatAssociationEnd.Role = GoatAssociationEnd.MemberEnd;
         }

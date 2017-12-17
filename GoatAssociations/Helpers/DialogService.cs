@@ -8,9 +8,18 @@ namespace GoatAssociations.Helpers
         {
             var About = new View.About
             {
-                DataContext = this
+                DataContext = DataContext
             };
             About.ShowDialog();
+        }
+       
+        public bool ShowAssociationEditor(ViewModel.AssociationViewModel.GoatAssociationViewModel DataContext)
+        {
+            var Editor = new View.GoatAssociation
+            {
+                DataContext = DataContext
+            };
+            return (Editor.ShowDialog() == true);
         }
 
         public void ShowError(string Message)

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GoatAssociations.Model
+﻿namespace GoatAssociations.Model.AssociationModel
 {
     /// <summary>
     /// Interface providing methods for reading and saving association

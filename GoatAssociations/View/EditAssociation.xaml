@@ -4,13 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoatAssociations.View"
-        xmlns:viewmodel="clr-namespace:GoatAssociations.ViewModel"
-        xmlns:model="clr-namespace:GoatAssociations.Model"
+        xmlns:viewmodel="clr-namespace:GoatAssociations.ViewModel.AssociationViewModel"
+        xmlns:viewmodelassociation="clr-namespace:GoatAssociations.ViewModel.AssociationViewModel"
+        xmlns:model="clr-namespace:GoatAssociations.Model.AssociationModel"
         mc:Ignorable="d"
-        Title="Goat the Association!" Height="394.322" Width="611" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Goat the Association!" Height="394.322" Width="611" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        DataContext="{Binding Source=AssociationViewModel}">
 
     <Window.Resources>
-        <viewmodel:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        <viewmodelassociation:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
+        <viewmodelassociation:GoatAssociationViewModel x:Key="AssociationViewModel"/>
     </Window.Resources>
 
     <Grid Margin="5,0,5,0">
@@ -149,12 +152,13 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-                            <RadioButton Grid.Row="0" Grid.Column="0" Margin="0,0,0,3" GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.None}}">Unspecified</RadioButton>
-                            <RadioButton Grid.Row="1" Grid.Column="0" Margin="0,0,0,1" GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.ZeroToOne}}">0..1</RadioButton>
-                            <RadioButton Grid.Row="0" Grid.Column="1" Margin="0,0,0,3" GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.ZeroToMany}}">0..*</RadioButton>
-                            <RadioButton Grid.Row="1" Grid.Column="1" Margin="0,0,0,1" GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.One}}">1</RadioButton>
-                            <RadioButton Grid.Row="0" Grid.Column="2" Margin="0,0,0,3" GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.OneToMany}}">1..*</RadioButton>
-                            <RadioButton Grid.Row="1" Grid.Column="2" Margin="0,0,0,1" GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.Many}}">*</RadioButton>
+                            <RadioButton Grid.Row="0" Grid.Column="0" Margin="0,0,0,3" GroupName="left-multi" IsChecked="{Binding Path=LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.None}}">Unspecified</RadioButton>
+                            <RadioButton Grid.Row="1" Grid.Column="0" Margin="0,0,0,1" GroupName="left-multi" IsChecked="{Binding Path=LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.ZeroToOne}}">0..1</RadioButton>
+                            <RadioButton Grid.Row="0" Grid.Column="1" Margin="0,0,0,3" GroupName="left-multi" IsChecked="{Binding Path=LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.ZeroToMany}}">0..*</RadioButton>
+                            <RadioButton Grid.Row="1" Grid.Column="1" Margin="0,0,0,1" GroupName="left-multi" IsChecked="{Binding Path=LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.One}}">1</RadioButton>
+                            <RadioButton Grid.Row="0" Grid.Column="2" Margin="0,0,0,3" GroupName="left-multi" IsChecked="{Binding Path=LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.OneToMany}}">1..*</RadioButton>
+                            <RadioButton Grid.Row="1" Grid.Column="2" Margin="0,0,0,1" GroupName="left-multi" IsChecked="{Binding Path=LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.Many}}">*</RadioButton>
+
                         </Grid>
 
                         <Grid Grid.Row="1">
@@ -162,8 +166,8 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <RadioButton Grid.Column="0" Margin="0,2,4,0" GroupName="left-multi" IsChecked="{Binding Path=GoatAssociation.LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.Other}}" VerticalContentAlignment="Center">Custom:</RadioButton>
-                            <TextBox Grid.Column="1" Text="{Binding Path='GoatAssociation.LeftCustomMultiplicity', UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalContentAlignment="Center"/>
+                            <RadioButton Grid.Column="0" Margin="0,2,4,0" GroupName="left-multi" IsChecked="{Binding Path=LeftMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.Other}}" VerticalContentAlignment="Center">Custom:</RadioButton>
+                            <TextBox Grid.Column="1" Text="{Binding Path='LeftCustomMultiplicity', UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalContentAlignment="Center"/>
                         </Grid>
                     </Grid>
                 </GroupBox>
@@ -283,12 +287,12 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-                            <RadioButton Grid.Row="0" Grid.Column="0" Margin="0,0,0,3" GroupName="right-multi" IsChecked="{Binding Path=GoatAssociation.RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.None}}">Unspecified</RadioButton>
-                            <RadioButton Grid.Row="1" Grid.Column="0" Margin="0,0,0,1" GroupName="right-multi" IsChecked="{Binding Path=GoatAssociation.RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.ZeroToOne}}">0..1</RadioButton>
-                            <RadioButton Grid.Row="0" Grid.Column="1" Margin="0,0,0,3" GroupName="right-multi" IsChecked="{Binding Path=GoatAssociation.RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.ZeroToMany}}">0..*</RadioButton>
-                            <RadioButton Grid.Row="1" Grid.Column="1" Margin="0,0,0,1" GroupName="right-multi" IsChecked="{Binding Path=GoatAssociation.RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.One}}">1</RadioButton>
-                            <RadioButton Grid.Row="0" Grid.Column="2" Margin="0,0,0,3" GroupName="right-multi" IsChecked="{Binding Path=GoatAssociation.RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.OneToMany}}">1..*</RadioButton>
-                            <RadioButton Grid.Row="1" Grid.Column="2" Margin="0,0,0,1" GroupName="right-multi" IsChecked="{Binding Path=GoatAssociation.RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.Many}}">*</RadioButton>
+                            <RadioButton Grid.Row="0" Grid.Column="0" Margin="0,0,0,3" GroupName="right-multi" IsChecked="{Binding Path=RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.None}}">Unspecified</RadioButton>
+                            <RadioButton Grid.Row="1" Grid.Column="0" Margin="0,0,0,1" GroupName="right-multi" IsChecked="{Binding Path=RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.ZeroToOne}}">0..1</RadioButton>
+                            <RadioButton Grid.Row="0" Grid.Column="1" Margin="0,0,0,3" GroupName="right-multi" IsChecked="{Binding Path=RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.ZeroToMany}}">0..*</RadioButton>
+                            <RadioButton Grid.Row="1" Grid.Column="1" Margin="0,0,0,1" GroupName="right-multi" IsChecked="{Binding Path=RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.One}}">1</RadioButton>
+                            <RadioButton Grid.Row="0" Grid.Column="2" Margin="0,0,0,3" GroupName="right-multi" IsChecked="{Binding Path=RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.OneToMany}}">1..*</RadioButton>
+                            <RadioButton Grid.Row="1" Grid.Column="2" Margin="0,0,0,1" GroupName="right-multi" IsChecked="{Binding Path=RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.Many}}">*</RadioButton>
                         </Grid>
 
                         <Grid Grid.Row="1">
@@ -296,8 +300,8 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <RadioButton Grid.Column="0" Margin="0,2,4,0" GroupName="right-multi" IsChecked="{Binding Path=GoatAssociation.RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.Other}}" VerticalContentAlignment="Center">Custom:</RadioButton>
-                            <TextBox Grid.Column="1" Text="{Binding Path='GoatAssociation.RightCustomMultiplicity', UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalContentAlignment="Center"/>
+                            <RadioButton Grid.Column="0" Margin="0,2,4,0" GroupName="right-multi" IsChecked="{Binding Path=RightMultiplicityType, Mode=TwoWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static viewmodel:MultiplicityType.Other}}" VerticalContentAlignment="Center">Custom:</RadioButton>
+                            <TextBox Grid.Column="1" Text="{Binding Path='RightCustomMultiplicity', UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" VerticalContentAlignment="Center"/>
                         </Grid>
                     </Grid>
                 </GroupBox>

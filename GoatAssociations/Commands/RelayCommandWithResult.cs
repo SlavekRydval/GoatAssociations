@@ -1,14 +1,13 @@
-﻿using System;
-
-namespace GoatAssociations.Commands
+﻿namespace GoatAssociations.Commands
 {
+    using System;
+
     class RelayCommandWithResult<T> : GalaSoft.MvvmLight.Command.RelayCommand
     {
-        public RelayCommandWithResult(Action execute, Func<bool> canExecute) : base(execute, canExecute)
-        {
-        }
+        public RelayCommandWithResult(Action execute, Func<bool> canExecute) : base(execute, canExecute) { }
+        public RelayCommandWithResult(Action execute) : this(execute, null) { }
 
-        T Result { get; set; }
+        public T Result { get; set; }
     }
 
     class RelayCommandWithResult<S, T> : GalaSoft.MvvmLight.Command.RelayCommand<S>

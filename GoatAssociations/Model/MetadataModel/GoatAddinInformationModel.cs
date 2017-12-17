@@ -1,4 +1,4 @@
-﻿namespace GoatAssociations.Model
+﻿namespace GoatAssociations.Model.MetadataModel
 {
     class GoatAddinInformationModel
     {

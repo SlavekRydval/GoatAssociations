@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace GoatAssociations.ViewModel
+namespace GoatAssociations.ViewModel.AssociationViewModel
 {
     public class EnumToBooleanConverter : IValueConverter
     {
