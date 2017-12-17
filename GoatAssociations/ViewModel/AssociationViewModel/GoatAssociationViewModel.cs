@@ -64,11 +64,11 @@ namespace GoatAssociations.ViewModel.AssociationViewModel
                     {
                         GoatAssociation = associationService.Read();
 
-                        GoatAssociation.Left.PropertyChanged += Left_PropertyChanged;
-                        Left_PropertyChanged(GoatAssociation.Left, new System.ComponentModel.PropertyChangedEventArgs(nameof(Left.Multiplicity)));
+                        GoatAssociation.Left.PropertyChanged += RightLeft_PropertyChanged;
+                        RightLeft_PropertyChanged(GoatAssociation.Left, new System.ComponentModel.PropertyChangedEventArgs(nameof(Left.Multiplicity)));
 
-                        GoatAssociation.Right.PropertyChanged += Right_PropertyChanged;
-                        Right_PropertyChanged(GoatAssociation.Right, new System.ComponentModel.PropertyChangedEventArgs(nameof(Right.Multiplicity)));
+                        GoatAssociation.Right.PropertyChanged += RightLeft_PropertyChanged;
+                        RightLeft_PropertyChanged(GoatAssociation.Right, new System.ComponentModel.PropertyChangedEventArgs(nameof(Right.Multiplicity)));
 
                         EditAssociationCommand.Result = dialogService.ShowAssociationEditor(this);
 
@@ -206,58 +206,45 @@ namespace GoatAssociations.ViewModel.AssociationViewModel
 
         #endregion
 
-
-
-        /// TODO: Refactoring of Right_PropertyChanged and Left_PropertyChanged
-        private void Right_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void RightLeft_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (!(sender is GoatAssociationEndModel))
-                throw new ArgumentException($"Sender has to be of {nameof(Model)}.{nameof(GoatAssociationEndModel)} type.");
+                throw new ArgumentException($"Sender has to be of {nameof(GoatAssociationEndModel)} type.");
+
+            MultiplicityType mt;
+
+            if (sender == Left)
+                mt = LeftMultiplicityType;
+            else if (sender == Right)
+                mt = RightMultiplicityType;
+            else
+                throw new ArgumentException("Sender if not end of myself.");
 
             if (e.PropertyName == nameof(GoatAssociationEndModel.Multiplicity))
             {
                 switch (((GoatAssociationEndModel)sender).Multiplicity)
                 {
-                    case "": RightMultiplicityType = MultiplicityType.None; break;
-                    case "1": RightMultiplicityType = MultiplicityType.One; break;
-                    case "0..1": RightMultiplicityType = MultiplicityType.ZeroToOne; break;
-                    case "1..*": RightMultiplicityType = MultiplicityType.OneToMany; break;
-                    case "0..*": RightMultiplicityType = MultiplicityType.ZeroToMany; break;
-                    case "*": RightMultiplicityType = MultiplicityType.Many; break;
+                    case "": mt = MultiplicityType.None; break;
+                    case "1": mt = MultiplicityType.One; break;
+                    case "0..1": mt = MultiplicityType.ZeroToOne; break;
+                    case "1..*": mt = MultiplicityType.OneToMany; break;
+                    case "0..*": mt = MultiplicityType.ZeroToMany; break;
+                    case "*": mt = MultiplicityType.Many; break;
                     default:
-                        RightCustomMultiplicity = ((GoatAssociationEndModel)sender).Multiplicity;
-                        RightMultiplicityType = MultiplicityType.Other;
+                        if (sender == Left)
+                            LeftCustomMultiplicity = ((GoatAssociationEndModel)sender).Multiplicity;
+                        else
+                            RightCustomMultiplicity = ((GoatAssociationEndModel)sender).Multiplicity;
+                        mt = MultiplicityType.Other;
                         break;
                 }
+
+                if (sender == Left)
+                    LeftMultiplicityType = mt;
+                else
+                    RightMultiplicityType = mt;
             }
         }
-
-        private void Left_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (!(sender is GoatAssociationEndModel))
-                throw new ArgumentException($"Sender has to be of {nameof(Model)}.{nameof(GoatAssociationEndModel)} type.");
-
-            if (e.PropertyName == nameof(GoatAssociationEndModel.Multiplicity))
-            {
-                switch (((GoatAssociationEndModel)sender).Multiplicity)
-                {
-                    case "": LeftMultiplicityType = MultiplicityType.None; break;
-                    case "1": LeftMultiplicityType = MultiplicityType.One; break;
-                    case "0..1": LeftMultiplicityType = MultiplicityType.ZeroToOne; break;
-                    case "1..*": LeftMultiplicityType = MultiplicityType.OneToMany; break;
-                    case "0..*": LeftMultiplicityType = MultiplicityType.ZeroToMany; break;
-                    case "*": LeftMultiplicityType = MultiplicityType.Many; break;
-                    default:
-                        LeftCustomMultiplicity = ((GoatAssociationEndModel)sender).Multiplicity;
-                        LeftMultiplicityType = MultiplicityType.Other;
-                        break;
-                }
-            }
-        }
-
-
-
-
 
 
     }

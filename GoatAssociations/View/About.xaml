@@ -4,14 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoatAssociations.View"
+        xmlns:model="clr-namespace:GoatAssociations.Model.MetadataModel"
         mc:Ignorable="d"
-        Title="About Goat Association!" Height="335.09" Width="431.033" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="About Goat Association!" Height="335.09" Width="431.033" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        DataContext="{Binding Path=GoatAddinInformationModel}">
+
+
+    <Window.Resources>
+        <model:GoatAddinInformationModel x:Key="GoatAddinInformationModel"/>
+    </Window.Resources>
+
+
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/GoatAssociations;component/Resources/kozlik.png" AlignmentX="Right" AlignmentY="Top" Stretch="Uniform"/>
         </Grid.Background>
         <StackPanel>
             <TextBlock Margin="10,20,5,5" Text="Goat Associations!" FontSize="26" FontWeight="Bold"/>
+            <!--<TextBlock Margin="10,20,5,5" Text="{Binding Path=AddinName}" FontSize="26" FontWeight="Bold"/>-->
             <TextBlock Margin="10,2,5,5" FontSize="16" Text="Addin for Sparx Enterprise Architect" FontStyle="Italic"/>
             <TextBlock Margin="10,2,5,5" FontSize="14" Text="Created by Slávek Rydval"/>
             <TextBlock Margin="10,2,5,5"><Hyperlink NavigateUri="mailto:slavek@rydval.cz" Click="Hyperlink_Click">slavek@rydval.cz</Hyperlink></TextBlock>
